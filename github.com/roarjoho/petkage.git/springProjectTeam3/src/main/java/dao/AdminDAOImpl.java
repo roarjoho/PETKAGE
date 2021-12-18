@@ -148,9 +148,20 @@ public class AdminDAOImpl implements AdminDAO{
 //3. 게시판 관리------------------------------------------------------------------
 	
 	@Override
+	public List<BoardDTO> getAllBoard(PageDTO pageDTO) {
+		System.out.println("AdminDAOImpl - getAllBoard");
+		return sqlSession.selectList(namespace+".getAllBoard", pageDTO);
+	}
+	
+	@Override
 	public List<BoardDTO> filterBoard(PageDTO pageDTO) {
 		System.out.println("AdminDAOImpl - filterBoard() 호출");
 		return sqlSession.selectList(namespace+".filterBoard", pageDTO);
+	}
+	@Override
+	public int getAllBoardCount() {
+		System.out.println("AdminDAOImpl - getAllBoardCount()");
+		return sqlSession.selectOne(namespace+".getAllBoardCount");
 	}
 
 	@Override
@@ -176,6 +187,7 @@ public class AdminDAOImpl implements AdminDAO{
 		System.out.println("AdminDAOImpl - deleteBoard");
 		sqlSession.delete(namespace + ".deleteBoard", board_numberID);
 	}
+
 
 
 	

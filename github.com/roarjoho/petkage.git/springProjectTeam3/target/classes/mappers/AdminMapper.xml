@@ -118,12 +118,24 @@
   
   
 <!-- 5. 게시판 관리 -->  
+	
+	<select id="getAllBoard" resultType="domain.BoardDTO">
+	  select *
+	  from board
+	  order by board_number desc limit #{startRow}, #{pageSize}
+	</select>
+	
 	<select id="filterBoard" resultType="domain.BoardDTO">
 	  select *
 	  from board
 	  where boardCategory_number = #{boardCategory_number}
 	  order by board_number desc limit #{startRow}, #{pageSize}
 	</select>
+	
+	<select id="getAllBoardCount" resultType="java.lang.Integer">
+  	  select count(*) 
+  	  from board
+  	</select>
 	
 	<select id="getBoardCount" resultType="java.lang.Integer">
   	  select count(*) 
@@ -145,8 +157,8 @@
   	</select>
   	
   	<delete id="deleteBoard">
-  	delete from board
-  	where board_numberID = #{board_numberID} 
-  </delete>
+	  	delete from board
+	  	where board_numberID = #{board_numberID} 
+  	</delete>
   
 </mapper>

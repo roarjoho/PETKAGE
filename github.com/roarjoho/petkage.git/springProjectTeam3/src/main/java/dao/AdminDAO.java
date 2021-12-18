@@ -43,7 +43,9 @@ public interface AdminDAO {
 	public void deleteOrder(OrderInfoDTO orderInfoDTO);
 
 //게시판 관리
+	public List<BoardDTO> getAllBoard(PageDTO pageDTO);
 	public List<BoardDTO> filterBoard(PageDTO pageDTO);
+	public int getAllBoardCount();
 	public int getBoardCount(String categoryNum);
 	public BoardDTO getBoardContent(String selectedPost);
 	public String getCategoryName(String selectedPost);

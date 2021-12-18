@@ -37,8 +37,14 @@
 		function categoryFilter(){
 			var seletedCategory = document.getElementById("categoryFilter");
 			var categoryNum = seletedCategory.options[document.getElementById("categoryFilter").selectedIndex].value;
-			location.href='${pageContext.request.contextPath}/admin/boardList'+categoryNum;			
+			if(categoryNum == 0){
+				location.href='${pageContext.request.contextPath}/admin/boardList'
+			}else{
+				location.href='${pageContext.request.contextPath}/admin/boardList' + categoryNum;	
+			}
 		}
+		
+		
 
 	</script> 
 </head>
@@ -70,6 +76,7 @@
  			<div class="row">
 				<div class="col-sm-2">
 				        <select class="form-control" id="categoryFilter" onchange="categoryFilter();">
+				        	<option value="0">전체 게시판</option>				        				        
 				            <option value="1" selected>상품 후기 게시판 </option>
 				            <option value="2">정보공유 게시판</option>
 				            <option value="3">반려동물 사진게시판</option>

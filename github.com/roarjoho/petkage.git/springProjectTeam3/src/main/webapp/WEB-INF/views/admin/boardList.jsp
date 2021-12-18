@@ -63,7 +63,7 @@
                         </li>
                         <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/boardList">게시판 관리</a>
                         </li>
-                        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/boardList">전체 게시판 조회</a>
+                        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/boardList">전체 게시판</a>
                         </li>
                      </ol>
                   </div>
@@ -74,7 +74,7 @@
  			<div class="row">
 				<div class="col-sm-2">
 				        <select class="form-control" id="categoryFilter" onchange="categoryFilter();">
-				        	<option value="0" selected>전체 게시글 조회</option>				        
+				        	<option value="0" selected>전체 게시판</option>				        
 				            <option value="1">상품 후기 게시판</option>
 				            <option value="2">정보공유 게시판</option>
 				            <option value="3">반려동물 사진게시판</option>
@@ -104,11 +104,22 @@
 			                                    </tr>
 			                                 </thead>
 			                              
-				                        <%--       <tbody>
-				                               <c:forEach var="boardDTO" items ="${allBoard }">
+				                        	<tbody>
+				                               <c:forEach var="boardDTO" items ="${allBoard}">
 				                                 <input type="hidden" id="board_numberID" value="${boardDTO.board_numberID }">
 				                                    <tr>
-				                                       <td onclick="location.href='${pageContext.request.contextPath }/admin/boardContent?board_numberID=${boardDTO.board_numberID}'">${boardDTO.boardCategory_numberName }</td>				                                    
+					                                    <c:if test="${boardDTO.boardCategory_number eq '1' }">
+					                                       <td onclick="location.href='${pageContext.request.contextPath }/admin/boardContent?board_numberID=${boardDTO.board_numberID}'">상품 후기</td>		                         
+					                                    </c:if>
+					                                    <c:if test="${boardDTO.boardCategory_number eq '2' }">
+					                                       <td onclick="location.href='${pageContext.request.contextPath }/admin/boardContent?board_numberID=${boardDTO.board_numberID}'">정보공유</td>		                         
+					                                    </c:if>
+					                                    <c:if test="${boardDTO.boardCategory_number eq '3' }">
+					                                       <td onclick="location.href='${pageContext.request.contextPath }/admin/boardContent?board_numberID=${boardDTO.board_numberID}'">반려동물</td>		                         
+					                                    </c:if>
+					                                    <c:if test="${boardDTO.boardCategory_number eq '4' }">
+					                                       <td onclick="location.href='${pageContext.request.contextPath }/admin/boardContent?board_numberID=${boardDTO.board_numberID}'">1:1 문의</td>		                         
+					                                    </c:if>				                                    
 				                                       <td onclick="location.href='${pageContext.request.contextPath }/admin/boardContent?board_numberID=${boardDTO.board_numberID}'">${boardDTO.board_number }</td>
 				                                       <td onclick="location.href='${pageContext.request.contextPath }/admin/boardContent?board_numberID=${boardDTO.board_numberID}'">${boardDTO.user_id }</td>
 				                                       <td onclick="location.href='${pageContext.request.contextPath }/admin/boardContent?board_numberID=${boardDTO.board_numberID}'">${boardDTO.board_title }</td>
@@ -117,8 +128,7 @@
 				                                       <td><input type="button" value="게시글 삭제" class="btn btn-danger waves-effect waves-light" onclick="deleteBtn();"></td>                                     
 				                                    </tr>
 				                                 </c:forEach>
-				                               </tbody>     --%>    
-				                               
+				                               </tbody>				                               
 				                            </table>		                              
 			                           </div>
 			                        </div>

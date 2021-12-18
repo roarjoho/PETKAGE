@@ -173,6 +173,20 @@ public class AdminServiceImpl implements AdminService{
 //5. 게시판 관리--------------------------------------------------------------------------------------------------------
 	
 	@Override
+	public List<BoardDTO> getAllBoard(PageDTO pageDTO) {
+		System.out.println("AdminServiceImpl - getAllBoard");
+		int currentPage=Integer.parseInt(pageDTO.getPageNum());
+		int startRow=(currentPage-1)*pageDTO.getPageSize()+1;
+		int endRow=startRow+pageDTO.getPageSize()-1;
+		
+		pageDTO.setCurrentPage(currentPage);
+		pageDTO.setStartRow(startRow-1); // 디비 startRow-1
+		pageDTO.setEndRow(endRow);
+		
+		return adminDAO.getAllBoard(pageDTO);
+	}
+	
+	@Override
 	public List<BoardDTO> filterBoard(PageDTO pageDTO) {
 		System.out.println("AdminServiceImpl - filterBoard");
 	      // pageSize, pageNum 담아옴
@@ -185,6 +199,12 @@ public class AdminServiceImpl implements AdminService{
 	      pageDTO.setStartRow(startRow-1); // 디비 startRow-1
 	      pageDTO.setEndRow(endRow);
 		return adminDAO.filterBoard(pageDTO);
+	}
+	
+	@Override
+	public int getAllBoardCount() {
+		System.out.println("AdminServiceImpl - getAllBoardCount");
+		return adminDAO.getAllBoardCount();
 	}
 
 	@Override
@@ -212,13 +232,5 @@ public class AdminServiceImpl implements AdminService{
 		
 	}
 
-	
-
-	
-
-
-	
-
-	
 
 }

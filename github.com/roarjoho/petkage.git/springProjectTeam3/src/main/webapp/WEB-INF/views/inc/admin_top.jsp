@@ -52,7 +52,7 @@
                     <a class="waves-effect waves-dark" href="${pageContext.request.contextPath}/admin/userList"><i class="icon-chart"></i><span> 회원 관리</span></a>
                 </li>
                 <li class="active treeview">
-                    <a class="waves-effect waves-dark" href="${pageContext.request.contextPath}/admin/boardList1"><i class="icon-chart"></i><span> 게시판 관리</span></a>
+                    <a class="waves-effect waves-dark" href="${pageContext.request.contextPath}/admin/boardList"><i class="icon-chart"></i><span> 게시판 관리</span></a>
                 </li>                                                                        
             </ul>
          </section>

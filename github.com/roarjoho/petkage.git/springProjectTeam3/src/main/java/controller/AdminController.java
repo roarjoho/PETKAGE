@@ -461,13 +461,27 @@ private String uploadPath;
 	
 //6. 게시판 관리--------------------------------------------------------------------------------------------------------------------------
 	
-	//게시판 이동 - 카테고리 선택X인 상태 => 카테고리 선택 유도
+	//게시판 이동 - 카테고리 선택X인 상태 => 전체 게시글 조회
 		@RequestMapping("/admin/boardList")
-		public String boardList(HttpSession session) {
+		public String boardList(HttpServletRequest request, Model model, HttpSession session) {
 			String adminSession = (String)session.getAttribute("id");
 			if(adminSession == "admin") {
 				System.out.println("AdminController - boardList()");
-				
+				int pageSize = 10;
+				String pageNum = request.getParameter("pageNum");
+				if(pageNum == null) {
+					pageNum = "1";
+				}		
+				PageDTO pageDTO = new PageDTO();
+				pageDTO.setPageSize(pageSize);
+				pageDTO.setPageNum(pageNum);		
+				int count = adminService.getAllBoardCount();								
+				pageDTO.setCount(count);		
+				model.addAttribute("pageDTO", pageDTO);
+							
+				List<BoardDTO> allBoard = adminService.getAllBoard(pageDTO);
+				model.addAttribute("allBoard", allBoard);	
+								
 				return "admin/boardList";
 			}else {
 				System.out.println("관리자 계정 아님");
