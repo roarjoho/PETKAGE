@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="mapper.UserMapper">
+
+	<insert id="insertUser">
+		insert into user(user_id, user_pwd, user_name, user_phone, user_email, user_createDate, user_deleteCheck, user_adminCheck) 
+		values (#{user_id}, #{user_pwd}, #{user_name}, #{user_phone}, #{user_email}, #{user_createDate}, 'N', 0) 
+	</insert>
+	
+	<select id="checkId" resultType="domain.UserDTO">
+		select * from user where user_id = #{user_id}
+	</select>
+	
+	<select id="checkUser" resultType="domain.UserDTO">
+		select * 
+		from user 
+		where user_id = #{user_id} and 
+		      user_pwd = #{user_pwd} and 
+		      user_deleteCheck='N'
+	</select>
+	
+	<select id="checkAdmin" resultType="domain.UserDTO">
+		select * 
+		from user 
+		where user_id = #{user_id} and
+			  user_adminCheck = 1
+	</select>
+</mapper>

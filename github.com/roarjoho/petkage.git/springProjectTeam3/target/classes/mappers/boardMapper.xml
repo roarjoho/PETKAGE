@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.boardMapper">
+
+
+	<insert id="insertBoard">
+		insert into
+		board(boardCategory_number,user_id,board_title,board_contents,board_createDate,board_updateDate,board_deleteDate,board_number,board_hit,board_deleteCheck,board_imagePath)
+		values(#{boardCategory_number},#{user_id},#{board_title},#{board_contents},#{board_createDate},#{board_updateDate},#{board_deleteDate},#{board_number},#{board_hit},'N',#{board_imagePath})
+	</insert>
+
+	<select id="getMaxNum" resultType="java.lang.Integer">
+		select max(board_number) from board where boardCategory_number = #{boardCategory_number}
+	</select>
+	
+	<select id="boardListView" resultType="domain.BoardDTO">
+		select * from board where boardCategory_number = #{boardCategory_number } and board_deleteCheck = 'N' order by board_number desc limit #{startRow}, #{pageSize};
+	</select>
+	
+
+	
+	<select id="BoardContentView" resultType="domain.BoardDTO">
+		select * from board where board_numberID = #{board_numberID}
+	</select>
+	
+	
+	
+	<update id="boardContentHit">
+	
+		update board set board_hit = board_hit+1 where board_numberID = #{board_numberID}
+	</update>
+	
+	<update id="updateBoard">
+		update board set boardCategory_number=#{boardCategory_number}, board_title = #{board_title}, board_contents = #{board_contents}, board_createDate= now(), board_imagePath=#{board_imagePath } where board_numberID = #{board_numberID};
+	</update>
+	
+	<delete id="deleteBoard">
+		delete from board where board_numberID = #{board_numberID};
+	</delete>
+	
+	<select id="getBoardCount1" resultType="java.lang.Integer">
+		select count(*) from board where boardCategory_number = 1 and board_deleteCheck = 'N' ;
+	</select>
+	
+	<select id="getBoardCount2" resultType="java.lang.Integer">
+		select count(*) from board where boardCategory_number = 2 and board_deleteCheck = 'N' ;
+	</select>
+	
+	<select id="getBoardCount3" resultType="java.lang.Integer">
+		select count(*) from board where boardCategory_number = 3 and board_deleteCheck = 'N' ;
+	</select>
+</mapper>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="mapper.shopMapper">
+  
+  	<select id="shopListView" resultType="domain.ProductDTO">
+		
+		select * from product where productCategory_number = #{productCategory_number}  limit #{startRow}, #{pageSize};
+	</select>
+	
+  	<select id="productDetailContent" resultType="domain.ProductDTO">
+		
+		select * from product where product_number = #{product_number}
+	</select>
+  
+  	<insert id="insertOrderInfo">
+  		insert into orderinfo(user_id,product_number,orderInfo_address1,orderInfo_address2,orderInfo_address3,orderInfo_productName,orderInfo_count,orderInfo_price,orderInfo_status,orderInfo_receiverName,orderInfo_receiverPhone, orderInfo_date) 
+  		values(#{user_id},#{product_number},#{orderInfo_address1},#{orderInfo_address2},#{orderInfo_address3},#{orderInfo_productName},#{orderInfo_count},#{orderInfo_price},'1',#{orderInfo_receiverName},#{orderInfo_receiverPhone}, now())
+  	</insert>
+  	
+  	<select id="productOrderbyList" resultType="domain.ProductDTO">
+		
+		select * from product where productCategory_number = #{productCategory_number} order by ${orderby} ${ascdesc};
+	</select>
+	
+	<select id="shopListViewCount" resultType="java.lang.Integer">
+		select count(*) from product where productCategory_number = #{productCategory_number};
+	</select>
+	
+	<select id="cartCheck" resultType="domain.CartDTO">
+		select * from cart where user_id = #{user_id} and product_number = #{product_number};
+	</select>
+	
+	 <insert id="insertcart">
+  		INSERT INTO cart (product_number, user_id, cart_count, addDate) VALUES (#{product_number}, #{user_id}, #{cart_count}, now());
+  	</insert>
+  
+	<select id="cartSelectList" resultType="domain.ProductDTO">
+		select a.product_number, b.product_name, b.product_price, b.product_imagePath, a.cart_count
+		from cart a inner join product b
+		on a.product_number = b.product_number
+		where user_id = #{user_id};
+	</select>
+	
+	<delete id="deleteCart">
+		delete from cart where user_id = #{user_id};
+	</delete>
+	
+	<delete id="deleteCart2">
+		delete from cart where user_id = #{user_id} and product_number = #{product_number};
+	</delete>
+	
+		<delete id="deleteCartALL">
+		delete from cart where user_id = #{user_id};
+	</delete>
+	
+  </mapper>

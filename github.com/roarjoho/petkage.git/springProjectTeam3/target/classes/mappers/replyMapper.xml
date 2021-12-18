@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="mapper.replyMapper">
+
+<select id="getReplyList" resultType="domain.ReplyDTO">
+		SELECT
+			reply_number
+			, board_numberID
+			, reply_contents
+			, user_id
+			, reply_createDate
+		FROM
+			reply
+		WHERE
+			board_numberID = #{board_numberID}
+		ORDER BY reply_createDate desc
+</select>
+
+<insert id="saveReply" parameterType="domain.ReplyDTO">
+
+		INSERT INTO REPLY(reply_number, board_numberID, user_id, reply_contents, reply_createDate, reply_deleteDate, reply_originNumber,
+							reply_order, reply_depth, reply_deleteCheck)
+		VALUES (
+			#{reply_number}
+			, #{board_numberID}
+			, #{user_id}
+			, #{reply_contents}
+			, now()
+			, now()
+			, #{reply_originNumber}
+			, #{reply_order}
+			, #{reply_depth}
+			, #{reply_depth}
+		)
+
+</insert>
+
+<update id="updateReply" parameterType="domain.ReplyDTO">
+
+		UPDATE REPLY SET
+			reply_contents = #{reply_contents}
+			, reply_createDate = now()
+		WHERE 
+			reply_number = #{reply_number}
+
+</update>	
+
+<delete id="deleteReply" parameterType="int">
+
+		DELETE FROM REPLY
+		WHERE 
+			reply_number = #{reply_number}
+
+</delete>
+
+<select id="getCountReply" parameterType="int">
+	select count(reply_number) from board where board_number = #{board_number}
+</select>
+
+</mapper>

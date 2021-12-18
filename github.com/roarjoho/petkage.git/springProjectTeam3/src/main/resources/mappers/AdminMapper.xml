@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.AdminMapper">
+
+
+  <select id="getProductAddDate" resultType="java.sql.Timestamp">
+	select product_date 
+	from product where product_number = #{product_number}
+  </select>
+  
+<!-- 1. 매출관리 -->
+ 	<select id="getSalesChart" resultType="domain.SalesChartDTO">
+	  select substr(orderInfo_date, 1, 10) as date, sum(orderInfo_count*orderInfo_price) as price
+	  from orderInfo
+	  where orderInfo_date is not null
+	  and orderInfo_date between substr(DATE_ADD(NOW(),INTERVAL -1 MONTH), 1, 10) 
+	  AND	substr(NOW(), 1, 10)
+	  group by substr(orderInfo_date, 1, 10);
+	</select>
+	
+	
+<!-- 2. 상품관리 -->
+  <insert id="addProduct">
+ 	insert into product (productCategory_number, product_name, product_price, product_stock, product_desc, product_date, product_imagePath)
+ 	values ( #{productCategory_number}, #{product_name}, #{product_price}, #{product_stock}, #{product_desc}, #{product_date}, #{product_imagePath}) 
+  </insert>
+  
+  <delete id="deleteProduct">
+  	delete from product 
+  	where product_number = #{product_number} 
+  </delete>
+  
+  <update id="updateProduct">
+  	update product 
+  	set productCategory_number=#{productCategory_number}, product_name=#{product_name}, product_price=#{product_price}, product_stock=#{product_stock}, product_desc=#{product_desc}, product_date=#{product_date}, product_sell=#{product_sell}
+  	where product_number=#{product_number}  
+  </update>
+  
+  <select id="getProductList" resultType="domain.ProductDTO">
+ 	select * 
+ 	from product 
+ 	order by product_number desc limit #{startRow}, #{pageSize}
+  </select>
+  
+  <select id="getProductDetail" resultType="domain.ProductDTO">
+  	select * 
+  	from product 
+  	where product_number = #{product_number} 
+  </select>
+  
+  <select id="getProductCount" resultType="java.lang.Integer">
+  	select count(*) 
+  	from product
+  </select>
+  
+<!-- 3. 회원 관리 --> 
+  <select id="getUserList" resultType="domain.UserDTO">
+ 	select * 
+ 	from user
+ 	where user_adminCheck = 0
+ 	order by user_createDate desc limit #{startRow}, #{pageSize}
+  </select>
+  
+  <select id="getUserCount" resultType="java.lang.Integer">
+  	select count(*) 
+  	from user
+  </select>
+  
+  <update id="updateUserInfoPro">
+  	update user 
+  	set user_name = #{user_name}, user_phone = #{user_phone}, user_email = #{user_email}  
+  	where user_id = #{user_id}
+  </update>  
+  
+  <delete id="deleteUser">
+  	delete from user 
+  	where user_id = #{user_id} 
+  </delete>
+  
+  <select id="getUserDetail" resultType="domain.UserDTO">
+  	select * 
+  	from user 
+  	where user_id = #{user_id} 
+  </select>
+  
+  
+<!-- 4. 주문 관리 --> 
+	<select id="getOrderList" resultType="domain.OrderInfoDTO">
+	  select *
+	  from orderInfo
+	  order by orderInfo_number desc limit #{startRow}, #{pageSize}
+	</select>
+	
+	<select id="getOrderCount" resultType="java.lang.Integer">
+  	  select count(*) 
+  	  from orderInfo
+  	</select>
+  	
+  	<select id="getOrderDetail" resultType="domain.OrderInfoDTO">
+  	  select * 
+  	  from orderInfo
+  	  where orderInfo_number = #{orderInfo_number} 
+  	</select>
+  	
+  	<update id="updateOrder">
+  	  update orderInfo 
+  	  set orderInfo_status = #{orderInfo_status}, orderInfo_count = #{orderInfo_count}, orderInfo_receiverName = #{orderInfo_receiverName}, 
+  	      orderInfo_receiverPhone = #{orderInfo_receiverPhone}, orderInfo_address1 = #{orderInfo_address1}, orderInfo_address2 = #{orderInfo_address2}, orderInfo_address3 = #{orderInfo_address3}
+  	  where orderInfo_number = #{orderInfo_number}
+    </update>
+  
+  <delete id="deleteOrder">
+  	delete from orderInfo 
+  	where orderInfo_number = #{orderInfo_number} 
+  </delete>
+  
+  
+<!-- 5. 게시판 관리 -->  
+	<select id="filterBoard" resultType="domain.BoardDTO">
+	  select *
+	  from board
+	  where boardCategory_number = #{boardCategory_number}
+	  order by board_number desc limit #{startRow}, #{pageSize}
+	</select>
+	
+	<select id="getBoardCount" resultType="java.lang.Integer">
+  	  select count(*) 
+  	  from board
+  	  where boardCategory_number = #{boardCategory_number}
+  	</select>
+
+	<select id="getBoardContent" resultType="domain.BoardDTO">
+  	  select * 
+  	  from board
+  	  where board_numberID = #{board_numberID} 
+  	</select>
+  	
+  	<select id="getCategoryName" resultType="string">
+  	  select bc.boardCategory_numberName
+  	  from boardCategory bc join board b
+  	  on b.boardCategory_number = bc.boardCategory_number
+  	  where b.board_numberID = #{board_numberID}
+  	</select>
+  	
+  	<delete id="deleteBoard">
+  	delete from board
+  	where board_numberID = #{board_numberID} 
+  </delete>
+  
+</mapper>

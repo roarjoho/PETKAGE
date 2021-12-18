@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="mapper.mypageMapper">
+	
+	<select id="orderinfoSelectAll" resultType="domain.OrderInfoDTO">
+		
+		select orderInfo_number, orderInfo_date, orderInfo_productName, orderInfo_price, orderInfo_count, orderInfo_status from orderinfo where user_id = #{user_id} order by orderInfo_date desc limit #{startRow}, #{pageSize};
+	</select>
+
+	<select id="userCheck" resultType="domain.UserDTO">
+		select * from user where user_id=#{user_id} and user_pwd=#{user_pwd}
+	</select>
+	
+	<select id="userInfoSelect" resultType="domain.UserDTO">
+		select * from user where user_id=#{user_id}
+	</select>
+	
+	<select id="petInfoSelect" resultType="domain.PetDTO">
+		select * from pet where user_id=#{user_id}
+	</select>
+	
+	<select id="mypetDetailView" resultType="domain.PetDTO">
+		select * from pet where pet_number=#{pet_number}
+	</select>
+	
+	<update id="userDelete">
+		UPDATE user SET user_deleteDate=#{user_deleteDate}, user_deleteCheck='Y' WHERE user_id=#{user_id};
+	</update>
+	
+	<select id="myBoardSelectAll1" resultType="domain.BoardDTO">
+		select * from board where user_id = #{user_id} and boardCategory_number = 1 and board_deleteCheck = 'N' order by board_number desc limit #{startRow}, #{pageSize};
+	</select>
+	<select id="myBoardSelectAll2" resultType="domain.BoardDTO">
+		select * from board where user_id = #{user_id} and boardCategory_number = 2 and board_deleteCheck = 'N'  order by board_number desc limit #{startRow}, #{pageSize};
+	</select>
+	<select id="myBoardSelectAll3" resultType="domain.BoardDTO">
+		select * from board where user_id = #{user_id} and boardCategory_number = 3 and board_deleteCheck = 'N'  order by board_number desc limit #{startRow}, #{pageSize};
+	</select>
+	<select id="myBoardSelectAll4" resultType="domain.BoardDTO">
+		select * from board where user_id = #{user_id} and boardCategory_number = 4 and board_deleteCheck = 'N'  order by board_number desc limit #{startRow}, #{pageSize};
+	</select>
+	
+	<update id="userUpdate">
+		UPDATE user SET user_pwd=#{user_pwd}, user_name=#{user_name}, user_email=#{user_email}, user_phone=#{user_phone} WHERE user_id=#{user_id};
+	</update>
+	
+	<insert id="mypetAddInsert">
+		insert into pet(user_id, pet_type, pet_gender, pet_breed, pet_name, pet_birth, pet_weight, pet_addinfo, pet_imagePath)
+		 values(#{user_id},#{pet_type},#{pet_gender},#{pet_breed},#{pet_name},#{pet_birth},#{pet_weight},#{pet_addinfo},#{pet_imagePath});
+	</insert>
+	
+	<delete id="mypetDelete">
+		delete from pet where pet_number = #{pet_number}
+	</delete>
+	
+	<update id="mypetUpdate">
+		update pet set pet_type=#{pet_type}, pet_gender=#{pet_gender}, pet_breed=#{pet_breed}, pet_name=#{pet_name}, pet_birth=#{pet_birth}, pet_weight=#{pet_weight}, pet_addinfo=#{pet_addinfo}, pet_imagePath=#{pet_imagePath} where pet_number=#{pet_number};
+	</update>
+	
+	<select id="getOrderinfoCount" resultType="java.lang.Integer">
+		select count(*) from orderInfo where user_id = #{user_id};
+	</select>
+	
+	<select id="getBoardCount" resultType="java.lang.Integer">
+		select count(*) from board where boardCategory_number = 1 and board_deleteCheck = 'N' ;
+	</select>
+	
+	<select id="getBoardCount2" resultType="java.lang.Integer">
+		select count(*) from board where boardCategory_number = 2 and board_deleteCheck = 'N' ;
+	</select>
+	
+	<select id="getBoardCount3" resultType="java.lang.Integer">
+		select count(*) from board where boardCategory_number = 3 and board_deleteCheck = 'N' ;
+	</select>
+	
+	<select id="getBoardCount4" resultType="java.lang.Integer">
+		select count(*) from board where boardCategory_number = 4 and board_deleteCheck = 'N' ;
+	</select>
+	
+	<select id="getMaxNum" resultType="java.lang.Integer">
+		select max(board_number) from board where board_deleteCheck = 'N'and boardCategory_number = #{boardCategory_number} and user_id=#{user_id};
+	</select>
+	
+	<insert id="InquiryInsert">
+		insert into board(boardCategory_number, user_id, board_title, board_contents, board_createDate, board_updateDate, board_deleteDate, board_number, board_hit, board_deleteCheck, board_imagePath) 
+		values(#{boardCategory_number}, #{user_id},#{board_title},#{board_contents},#{board_createDate},#{board_updateDate},#{board_deleteDate},#{board_number},#{board_hit},'N',#{board_imagePath})
+	</insert>
+	
+	<select id="InquirySelectList" resultType="domain.BoardDTO">
+		select * from board where boardCategory_number='4'and board_deleteCheck='N' and user_id=#{user_id}
+	</select>
+	
+	<select id="mypageInquiryContentView" resultType="domain.BoardDTO">
+		select * from board where board_numberID=#{board_numberID}
+	</select>
+	
+	<update id="mypageInquiryDelete">
+		update board set board_deleteDate=#{board_deleteDate}, board_deleteCheck='Y' where board_numberID=#{board_numberID}
+	</update>
+	
+	<update id="mypageInquiryUpdatePro">
+		update board set board_title=#{board_title}, board_contents=#{board_contents} where board_numberID=#{board_numberID}
+	</update>
+	
+	
+</mapper>
