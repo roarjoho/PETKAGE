@@ -20,5 +20,5 @@
 - 진행상황 확인 - Trello
  
 4. 기여자 (총 9명)
-@roarjoho / @Seong-ye / @bokyeong2 / @jaehyeon1716 / @JinSeokkk
+@roarjoho / @Seong-ye / @bokyeong2 / @jaehyeon1716 / @JinSeokkk / 
 @Seyeon1 / @chuyeonje / @parkhyeonhong / @DEVhodu
