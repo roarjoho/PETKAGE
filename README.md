@@ -11,13 +11,13 @@
 - (2021.12.08. ~ 2021.12.14) 각 팀원이 구현한 기능 취합 및 최종작업
 
 3. 활용 툴
- 1) 언어 - JAVA, JSP, Ajax, JS/Jquery, HTML/CSS
- 2) 프레임워크 - STS4
- 3) 버전관리 - Github
- 4) 서버 - Apache Tomcat 8.5
- 5) 데이터베이스 - MySQL, ERDCloud(설계)
- 6) 의사소통 - Slack
- 7) 진행상황 확인 - Trello
+- 언어 - JAVA, JSP, Ajax, JS/Jquery, HTML/CSS
+- 프레임워크 - STS4
+- 버전관리 - Github
+- 서버 - Apache Tomcat 8.5
+- 데이터베이스 - MySQL, ERDCloud(설계)
+- 의사소통 - Slack
+- 진행상황 확인 - Trello
  
 4. 기여자 (총 9명)
 @roarjoho / @Seong-ye / @bokyeong2 / @jaehyeon1716 / @JinSeokkk
